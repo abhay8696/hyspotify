@@ -1,0 +1,7 @@
+{
+    "spotifyclientID" : "4a3b35b273c648259563ca05a9bb4f36",
+    "localhost" : "http://localhost:3000/",
+    "productionHost" : "https://hyspotify-1.web.app/",
+    "productionBackend" : "https://us-central1-hyspotify-1.cloudfunctions.net/user",
+    "localBackend" : "http://localhost:5001/hyspotify-1/us-central1/user"
+}

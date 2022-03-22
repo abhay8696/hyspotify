@@ -1,0 +1,10 @@
+.App {
+  background-color: #171821;
+  height: 100vh;
+  position: relative;
+  font-family: 'Montserrat', 'Open Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
