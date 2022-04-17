@@ -5,15 +5,14 @@ import Config from '../config.json'
 import { SpotifyTokenContext } from '../contexts/spotifyTokenContext';
 import { UserDataContext } from '../contexts/userDataContext';
 import { MiniPlayer2Context } from '../contexts/miniPlayer2Context';
+import { SpotifyTrackUriContext } from '../contexts/spotifyTrackUriContext';
 //components
 import SpotifyNav from './spotifyNav';
 import MusicBox from './musicBox';
 import MiniPlayer from './miniPlayer';
 import ChatList from '../chats/chatList';
+import PlayBox from './playBox';
 //material ui
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import Drawer from '@mui/material/Drawer';
 
 //styles
@@ -33,7 +32,8 @@ const SpotifyRoot = (props) => {
     const
     [spotifyToken, setSpotifyToken] = useContext(SpotifyTokenContext),
     [userData, setUserData] = useContext(UserDataContext),
-    [ miniPlayer2, setMiniPlayer2 ] = useContext(MiniPlayer2Context)
+    [ miniPlayer2, setMiniPlayer2 ] = useContext(MiniPlayer2Context),
+    [spotifyTrackUri, setSpotifyTrackUri] = useContext(SpotifyTrackUriContext)
 
     //props
     const { db } = props
@@ -81,7 +81,12 @@ const SpotifyRoot = (props) => {
             // window.location()
         })
     },
-    toggleChatListDrawer = ()=> setChatDrawerOn(!chatDrawerOn);
+    toggleChatListDrawer = ()=> setChatDrawerOn(!chatDrawerOn),
+    miniPlayerFunc = ()=> {
+        // !miniPlayer2 ? <MiniPlayer /> : null 
+        if(userData.product === 'open') return;
+        if(!miniPlayer2) return <MiniPlayer/> 
+    }
 
 
     return (
@@ -98,12 +103,18 @@ const SpotifyRoot = (props) => {
                     />
             </Drawer>
             {
-                userData ?
-                <>
-                <MusicBox userData={userData}/>
-                { !miniPlayer2 ? <MiniPlayer /> : null } 
-                </> 
-                : null
+            userData ?
+            <div className={classes.spotifyBody}>
+                <div className={classes.body1}>
+                    <MusicBox userData={userData}/>
+                    {/* {miniPlayerFunc()}  */}
+                </div>
+                <PlayBox/>
+                <div className={classes.body3}>
+                    <ChatList db={db} />
+                </div>
+            </div> 
+            : null
             }
         </div>
     );

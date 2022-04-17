@@ -5,11 +5,28 @@ const ChatBoxStyles = makeStyles(theme=> ({
         width: '100vw',
         fontFamily: 'Montserrat, Open Sans, sans-serif',
         backgroundColor: '#171821',
-        height: '100vh',
+        height: '92vh',
         color: 'white',
         margin: '0px',
         display: 'flex', 
         flexDirection: 'column',
+        '@media only screen and (min-width: 768px)': { //desktop
+            width: '30vw',
+            fontSize: '0.8rem !important',
+            maxHeight: 'calc(100% - 15vh)',
+        },'@media only screen and (mix-width: 767px)': { //mobile
+            
+        },
+    },
+    navbarBig: {
+        '@media only screen and (min-width: 768px)': { //desktop
+            display: 'none !important',
+        },
+    },
+    navbarSmall:{
+        '@media only screen and (mix-width: 767px)': { //mobile
+            display: 'none !important'
+        },
     },
     songSwitch: {
         display: 'flex',
@@ -24,7 +41,10 @@ const ChatBoxStyles = makeStyles(theme=> ({
         animationName: '$riseout',
         animationDuration: '200ms',
         animationTimingFunction: 'ease-in-out',
-        marginRight: '8px'
+        marginRight: '8px',
+        '@media only screen and (min-width: 768px)': { //desktop
+            display: 'none !important',
+        }
     },
     '@keyframes riseout': {
         '0%': {
@@ -57,14 +77,30 @@ const ChatBoxStyles = makeStyles(theme=> ({
         alignItems: 'center',
         overflow: 'auto',
         boxSizing: 'border-box',
-        '& > *': { width: '100%',}
+        '& > *': { width: '100%',},
+        overflowX: 'hidden',
     },
     msgBucket:{
         display:'flex',
         flexDirection: 'column-reverse',
         overflow: 'auto',
         fontSize: '0.8rem',
-        borderRadius: '0px 0px 25px 25px'
+        borderRadius: '0px 0px 25px 25px',
+        '@media only screen and (min-width: 768px)': { //desktop
+            '&::-webkit-scrollbar': {
+                width: '0.3rem',
+                backgroundColor: 'inherit',
+            },
+            '&::-webkit-scrollbar-thumb': {
+                background: 'grey',
+                borderRadius: '2px',
+                opacity: '0',
+                '&:hover':{
+                    cursor: 'pointer',
+                },
+            },
+        },
+        fontSize: '12px'
     },
     myMsg: {
         backgroundColor: 'white',
@@ -81,6 +117,9 @@ const ChatBoxStyles = makeStyles(theme=> ({
         flexDirection: 'column',
         animationName: '$transitionInChatBox',
         animationDuration: '400ms',
+        '@media only screen and (min-width: 768px)': { //desktop
+            // '& span': { fontSize: '12px' },
+        },
     },
     frndMsg:{
         backgroundColor: '#42ff75',
@@ -100,9 +139,12 @@ const ChatBoxStyles = makeStyles(theme=> ({
     },
     time: {
         textAlign: 'right',
-        fontSize: '0.7rem',
+        fontSize: '10px',
         fontStyle: 'italic',
-        opacity: '0.7'
+        opacity: '0.7',
+        '@media only screen and (min-width: 768px)': { //desktop
+            fontSize: '9px'
+        },
         // borderTop: '0.5px solid white'
     },
     typingArea:{
@@ -112,14 +154,16 @@ const ChatBoxStyles = makeStyles(theme=> ({
         borderRadius: '25px',
         backgroundColor: 'white',
         color: 'black',
-        // paddingRight: '4px',
+        '@media only screen and (min-width: 768px)': { //desktop
+            width: '99%',
+        },
     },
     textBox: {
         flexGrow: '1',
         padding : '12px 8px',
         // backgroundColor: 'grey',
         borderRadius: '25px',
-        fontSize: '16px',
+        fontSize: '12px',
         outline: 'none',
         borderStyle: 'none',
         '&:focus': {
@@ -129,6 +173,12 @@ const ChatBoxStyles = makeStyles(theme=> ({
     sendButt: {
         marginRight: '10px',
         borderRadius: '50%',
+        '@media only screen and (min-width: 768px)': { //desktop
+            '& :hover':{
+                color: '#42ff75',
+                cursor: 'pointer'
+            },
+        },
     }
 }))
 

@@ -19,6 +19,9 @@ import Drawer from '@mui/material/Drawer';
 import { Button } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 
 const MusicBox = (props) => {
     //styles
@@ -42,7 +45,8 @@ const MusicBox = (props) => {
     [ newReleases, setNewReleases ] = useState(),
     [ searchDrawer, setSearchDrawer ] = useState(false),
     [ loadingTop50, setLoadingTop50 ] = useState(true),
-    [ loadingTopTracks, setLoadingTopTracks ] = useState(true);
+    [ loadingTopTracks, setLoadingTopTracks ] = useState(true),
+    [ searchBoxDiv, setSearchBoxDiv ] = useState(false);
 
     //life cycle methods
     useEffect(()=> {
@@ -53,7 +57,7 @@ const MusicBox = (props) => {
 
     //functions
     const
-    playTrack = (uri, trackName)=> {
+    playTrack = (uri, trackName, data)=> {
         if(isSharingSong){
             playSharedSongAPI({ 
                 myID: userData.id, 
@@ -64,7 +68,7 @@ const MusicBox = (props) => {
                 trackName 
             });
         }else{
-            setSpotifyTrackUri({uri, trackName, isSharingSong});
+            setSpotifyTrackUri({uri, trackName, isSharingSong, data});
         }
         window.localStorage.setItem('last played track', uri);
         if(closeSongDrawer) closeSongDrawer()
@@ -142,7 +146,6 @@ const MusicBox = (props) => {
         })
     },
     displaymyTopTracks = ()=> {
-        console.log(myTopTracks)
         let array = [];
         if(myTopTracks){
             let trackName;
@@ -155,7 +158,7 @@ const MusicBox = (props) => {
                 array.push(
                     <div 
                     className={classes.topTrack} key={track.id}
-                    onClick={()=> playTrack(track.uri, track.name)}
+                    onClick={()=> playTrack(track.uri, track.name, track)}
                     >
                         <img 
                         src={track.album.images[1].url} 
@@ -189,7 +192,7 @@ const MusicBox = (props) => {
                 array.push(
                     <div 
                     className={classes.topTrack} key={item.track.id}
-                    onClick={()=> playTrack(item.track.uri, item.track.name)}
+                    onClick={()=> playTrack(item.track.uri, item.track.name, item.track)}
                     >
                         <img 
                         src={item.track.album.images[1].url} 
@@ -237,14 +240,76 @@ const MusicBox = (props) => {
     },
     closeSearchDrawer = ()=> {
         setSearchDrawer(false)
-    };
-
-    return (
-        <div className={classes.musicBox}>
+    },
+    displayMusicBox = ()=> {
+        const anchorType = drawerTypeFunc();
+    return(
+        <>
             <div className={classes.searchBar}>
                 <span 
                 className={classes.searchBox}
-                onClick={()=> setSearchDrawer(true)}
+                onClick={()=>setSearchDrawer(true)}
+                >
+                    Search Tracks...
+                    <SearchIcon />
+                </span>
+                <Drawer
+                    anchor={anchorType}
+                    open={searchDrawer}
+                    onClose={()=> closeSearchDrawer()}
+                    className={classes.searchDrawer}
+                >
+                    <SearchComp 
+                    closeSearchDrawer={closeSearchDrawer}
+                    playTrack={playTrack}
+                    />
+                </Drawer>
+            </div>
+            <div className={classes.topTracksHeader}>Top 50 In India</div>
+            <div className={classes.topTrackList}>
+                {displayTop50()}
+            </div>
+            <div className={classes.topTracksHeader}>Frequently Played</div>
+            <div className={classes.topTrackList}>
+                {displaymyTopTracks()}
+            </div>
+            { !insideChatBox ?
+            <>
+            <div className={classes.topTracksHeader}>New Released Albums</div>
+            <div className={classes.topTrackList}>
+                {displayNewReleases()}
+            </div>
+            </>
+            : null
+            }
+        </>
+    )
+    },
+    drawerTypeFunc = ()=> {
+       if( window.screen.width > 767) return ('left')
+       else return ('top')
+    }
+
+    return (
+        <div className={classes.musicBox}>
+        {
+            displayMusicBox()
+        }
+        </div>
+    );
+};
+
+export default MusicBox;
+
+/* 
+
+            <div className={classes.searchBar}>
+                <span 
+                className={classes.searchBox}
+                // onClick={()=>setSearchDrawer(true)}
+                onClick={()=> {
+                    window.screen.width > 500 ? setSearchBoxDiv(true) : setSearchDrawer(true)
+                }}
                 >
                     Search Tracks...
                     <SearchIcon />
@@ -269,25 +334,4 @@ const MusicBox = (props) => {
                     </div>
                 </Drawer>
             </div>
-            <div className={classes.topTracksHeader}>Top 50 In India</div>
-            <div className={classes.topTrackList}>
-                {displayTop50()}
-            </div>
-            <div className={classes.topTracksHeader}>Frequently Played</div>
-            <div className={classes.topTrackList}>
-                {displaymyTopTracks()}
-            </div>
-            { !insideChatBox ?
-            <>
-            <div className={classes.topTracksHeader}>New Released Albums</div>
-            <div className={classes.topTrackList}>
-                {displayNewReleases()}
-            </div>
-            </>
-            : null
-            }
-        </div>
-    );
-};
-
-export default MusicBox;
+*/

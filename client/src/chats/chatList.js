@@ -108,10 +108,12 @@ const ChatList = (props) => {
 
     return (
         <div className={classes.chatList}>
-            <SpotifyNav 
-            toggleChatListDrawer={toggleChatListDrawer} 
-            insideChatsList = {true}
-            />
+            <div className={classes.chatListNav}>
+                <SpotifyNav 
+                toggleChatListDrawer={toggleChatListDrawer} 
+                insideChatsList = {true}
+                />
+            </div>
             <p>HySpotify Users</p>
             { allUsers ? 
                 displayAllUsers() 
@@ -121,7 +123,9 @@ const ChatList = (props) => {
             <Drawer
                 anchor={'right'}
                 open={chatBoxOpen}
-                onClose={()=> closeChatBox()}>
+                onClose={()=> closeChatBox()}
+                className={classes.chatDrawer}
+            >
                     <ChatBox 
                         toggleChatBox = {()=> closeChatBox()}
                         db = {db}

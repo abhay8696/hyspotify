@@ -8,6 +8,7 @@ import { SpotifyTokenContext } from '../contexts/spotifyTokenContext';
 import SearchStyles from './styles/searchStyles'
 
 //material ui
+import CloseIcon from '@mui/icons-material/Close';
 
 const SearchComp = (props) => {
     //styles
@@ -55,7 +56,8 @@ const SearchComp = (props) => {
                         artist: track.artists[0].name,
                         title: track.name,
                         uri: track.uri,
-                        albumUrl: smallestImg
+                        albumUrl: smallestImg,
+                        data: track
                     }
                 })
             )
@@ -82,10 +84,9 @@ const SearchComp = (props) => {
                     className={classes.track} 
                     key={item.albumUrl.url}
                     onClick={()=> {
-                        playTrack(item.uri, item.title)
+                        playTrack(item.uri, item.title, item.data)
                         setSearchText('')
                         closeSearchDrawer()
-                        // hideSpotify()
                     }}>
                         <span>
                             <img 
@@ -115,6 +116,14 @@ const SearchComp = (props) => {
                 className={classes.searchBox}
                 autoFocus
                 />
+                <div className={classes.closeSearchDiv}>
+                    <span 
+                    onClick={()=> closeSearchDrawer()}
+                    className={classes.closeSearchButton}
+                    >
+                    <CloseIcon />
+                    </span>
+                </div>
             </div>
             <div className={classes.searchResults}>
                 {displayResults()}

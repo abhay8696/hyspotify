@@ -25,7 +25,8 @@ const MiniPlayer = (props) => {
         open: false,
         vertical: 'top',
         horizontal: 'center',
-      });
+      }),
+    [ currentPlaying, setCurrentPlaying ] = useState('');
 
     //variables
     const { vertical, horizontal, open } = trackNotificationOpen;
@@ -36,20 +37,18 @@ const MiniPlayer = (props) => {
 
     //contexts
     const
-    [userData, setUserData] = useContext(UserDataContext),
+    [ userData, setUserData] = useContext(UserDataContext),
     [ chattingWith, setChattingWith ] = useContext(ChattingWithContext),
-    [spotifyToken, setSpotifyToken] = useContext(SpotifyTokenContext),
-    [spotifyTrackUri, setSpotifyTrackUri] = useContext(SpotifyTrackUriContext),
+    [ spotifyToken, setSpotifyToken] = useContext(SpotifyTokenContext),
+    [ spotifyTrackUri, setSpotifyTrackUri] = useContext(SpotifyTrackUriContext),
     [ playingTrack, setPlayingTrack ] = useContext(PlayingTrackContext);
 
     //life cycle
     useEffect(()=> {
-        if(spotifyTrackUri.uri){
-            handleTrackNotification()
-            setPlayingTrack(true)
-        }else{
-            setPlayingTrack(false)
-        }
+        // audio.pause();
+        if(spotifyTrackUri && spotifyTrackUri.data) setCurrentPlaying(spotifyTrackUri.data.preview_url)
+        var audio = new Audio(currentPlaying);
+        audio.play();
     }, [spotifyTrackUri])
 
     useEffect(()=> {
@@ -110,6 +109,15 @@ const MiniPlayer = (props) => {
     }
 
     return (
+        <div className={classes.miniPlayer}>
+            
+        </div>
+    );
+};
+
+export default MiniPlayer;
+
+/*return (
         <div 
         className={classes.miniPlayer} 
         >
@@ -127,7 +135,16 @@ const MiniPlayer = (props) => {
             />
             {spotifyTrackUri.uri && playingTrack? showSnackbar(spotifyTrackUri.trackName) : null}
         </div>
-    );
-};
+    ); 
+    
 
-export default MiniPlayer;
+
+    //life cycle
+    useEffect(()=> {
+        // if(spotifyTrackUri.uri){
+        //     handleTrackNotification()
+        //     setPlayingTrack(true)
+        // }else{
+        //     setPlayingTrack(false)
+        // }
+*/

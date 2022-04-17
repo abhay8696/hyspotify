@@ -6,7 +6,8 @@ const ChatListStyles = makeStyles(theme=> ({
         fontFamily: 'Montserrat, Open Sans, sans-serif',
         backgroundColor: '#171821',
         height: '100%',
-        color: 'white'
+        color: 'white',
+        fontSize: '12px',
     },
     chatListItem:{
         display: 'flex', alignItems: 'center',
@@ -22,7 +23,45 @@ const ChatListStyles = makeStyles(theme=> ({
     },
     chatListName:{
         marginLeft: '8px',
-    }
+    },
+    '@media only screen and (min-width: 768px)': { //desktop
+        chatList:{
+            maxWidth: '100%'
+        },
+        chatListNav:{
+            display: 'none'
+        },
+        chatListItem:{
+            cursor:'pointer',
+            '&:hover':{
+                color: '#42ff75'
+            }
+        },
+    },
+    chatDrawer:{
+        // backgroundColor: 'red',
+        // display: 'none',
+        '@media only screen and (min-width: 767px)': { //desktop
+            '& .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop':{
+                left: 'auto'
+            },
+            '& .MuiPaper-root':{
+                overflowY: 'hidden !important',
+            },
+            maxWidth: '30vw',
+            marginTop: '15vh',
+            '& > *': { 
+                maxWidth: '30vw',
+                marginTop: '16vh',
+                // height: '100%',
+            },
+            // '& .MuiPaper-root':{
+            //     width: '30vw',
+            //     border: '1px solid black',
+            //     backgroundColor: '#171821',
+            // }
+        },
+    },
 }))
 
 export default ChatListStyles;

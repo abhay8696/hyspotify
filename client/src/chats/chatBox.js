@@ -9,6 +9,7 @@ import { addMsgToMyDatabase, addMsgToFrndsDatabase, isSharingSongAPI, playShared
 import MusicBox from '../spotify/musicBox';
 import SpotifyNav from '../spotify/spotifyNav';
 import MiniPlayer2 from './miniPlayer2';
+import ChatNavbar from './chatNavbar';
 //contexts
 import { UserDataContext } from '../contexts/userDataContext';
 import { ChattingWithContext } from '../contexts/chattingWithContext';
@@ -147,9 +148,10 @@ const ChatBox = (props) => {
                         setIsSharingSong(false)
                         setMiniPlayer2(false)
                     }
-                    if(snaps.data().isSharingSong) setMiniPlayer2(true)
+                    // if(snaps.data().isSharingSong) setMiniPlayer2(true)
                     if(snaps.data().isSharingSong && sharedUri){
                         setSpotifyTrackUri({uri: sharedUri, trackName: sharedTrackName, isSharingSong});
+                        console.log(snaps.data())
                     }
                 }
             })
@@ -157,19 +159,19 @@ const ChatBox = (props) => {
     },[db])
     useEffect(()=> {
     }, [msgBucket])
-    useEffect(()=> {
-        const myID = userData.id,
-        frndName = chattingWith.display_name,
-        frndID = chattingWith.id;
-        let songSharer
-        if(isSharingSong){
-            setTempStyle(tempStyle1)
-            songSharer = userData.display_name
-        }else{
-            setTempStyle({})
-            songSharer = null
-        }
-    }, [isSharingSong])
+    // useEffect(()=> {
+    //     const myID = userData.id,
+    //     frndName = chattingWith.display_name,
+    //     frndID = chattingWith.id;
+    //     let songSharer
+    //     if(isSharingSong){
+    //         setTempStyle(tempStyle1)
+    //         songSharer = userData.display_name
+    //     }else{
+    //         setTempStyle({})
+    //         songSharer = null
+    //     }
+    // }, [isSharingSong])
     useEffect(()=> {
         if(dailogOpen){
             setTimeout(() => {
@@ -226,7 +228,7 @@ const ChatBox = (props) => {
         }
     },
     isSharingSongFunc = (val)=> {
-        val ? setMiniPlayer2(true) : setMiniPlayer2(false)
+        // val ? setMiniPlayer2(true) : setMiniPlayer2(false)
 
         setIsSharingSong(val)
         let songSharer
@@ -264,15 +266,19 @@ const ChatBox = (props) => {
     return (
         <>
         <div className={classes.chatBox}>
+            <div className={classes.navbarBig}>
             <SpotifyNav 
             toggleChatBox={toggleChatBox} 
             insideChatBox = {true}
-            className={classes.navbar}
             />
+            </div>
+            <div className={classes.navbarSmall}>
+            <ChatNavbar chattingWith={chattingWith} toggleChatBox={toggleChatBox}/>
+            </div>
             <div className={classes.msgArea} style={tempStyle}>
                 <div className={classes.songSwitch}>
                     <div>
-                    <span onClick={()=> setDailogOpen(true)}>Listen Songs Together</span>
+                    <span>Listen Songs Together</span>
                     <Switch color="warning" onClick={()=> isSharingSongFunc(!isSharingSong)} checked={isSharingSong}/>
                     </div>
                     { isSharingSong ? 
@@ -307,7 +313,7 @@ const ChatBox = (props) => {
                 </form>
             </div>
             <div>
-            { miniPlayer2 ? <MiniPlayer2 /> : null}
+            {/* { miniPlayer2 ? <MiniPlayer2 /> : null} */}
             </div>
         </div>
         <Drawer

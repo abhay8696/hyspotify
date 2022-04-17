@@ -8,3 +8,7 @@
 a {
   text-decoration: none;
 }
+
+.css-1u2w381-MuiModal-root-MuiDrawer-root{
+  position: relative !important;
+}

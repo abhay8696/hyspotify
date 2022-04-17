@@ -3,14 +3,43 @@ import { makeStyles } from '@mui/styles';
 
 const MusicBoxStyles = makeStyles(theme=> ({
     musicBox: {
+        overflowY: 'scroll',
+        maxHeight: 'calc(100vh - 15vh)',
         '@media only screen and (min-width: 768px)': { //desktop
-            fontSize: '14px'
+            fontSize: '12px',
+            maxWidth: '30vw'
         },
         '@media only screen and (max-width: 767px)': { //phones
             fontSize: '14px'
         },
-        overflowY: 'scroll',
-        maxHeight: '80vh'
+        '&::-webkit-scrollbar': {
+            width: '0.3rem',
+            backgroundColor: 'inherit',
+        },
+        '&::-webkit-scrollbar-thumb': {
+            background: 'inherit',
+            cursor: 'pointer',
+            borderRadius: '2px',
+            opacity: '0',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+            background: 'red',
+        },
+        '&:hover':{
+            '&::-webkit-scrollbar-thumb': {
+                background: 'grey',
+                cursor: 'pointer',
+                borderRadius: '2px',
+                opacity: '0',
+            },
+        },
+        '& .MuiAccordion-root':{
+            maxWidth: '95%',
+            height: '3rem',
+            borderRadius: '5px',
+            marginTop: '1rem',
+            padding: 0,
+        }
     },
     topTracksHeader:{
         margin: '12px auto 4px 8px',
@@ -43,6 +72,9 @@ const MusicBoxStyles = makeStyles(theme=> ({
         cursor: 'pointer',
         marginTop: '4px',
         marginLeft: '8px', 
+        '&:hover':{
+            color: '#42ff75'
+        },
     },
     '@keyframes riseout': {
         '0%': {
@@ -53,8 +85,8 @@ const MusicBoxStyles = makeStyles(theme=> ({
         },
     },
     topTrackImg: {
-        height: '144px',
-        width: '144px',
+        height: '120px',
+        width: '120px',
         borderRadius: '10px',
         animation: '$riseout 500ms ease-in-out',
         // margin: '8px 8px 0 auto',
@@ -70,14 +102,13 @@ const MusicBoxStyles = makeStyles(theme=> ({
     searchBar:{
         // width: '100vw',
         display: 'flex',
-        margin:'auto 8px',
+        margin:'16px 8px 8px 8px',
     },
     searchBox: {
         flexGrow: '1',
         padding : '12px 8px',
-        margin: '16px auto auto auto',
         backgroundColor: 'white',
-        fontSize: '16px',
+        fontSize: '12px',
         borderRadius: '10px',
         outline: 'none',
         borderColor: 'inherit',
@@ -89,21 +120,32 @@ const MusicBoxStyles = makeStyles(theme=> ({
     },
     searchDrawer:{
         fontFamily: 'Montserrat',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        '@media only screen and (min-width: 768px)': { //desktop
+            maxWidth: '30vw',
+            '& > *': { 
+                maxWidth: '30vw',
+                marginTop: '115px',
+                height: '100%',
+            },
+            '& .MuiPaper-root':{
+                width: '30vw',
+                backgroundColor: '#171821',
+            }
+        },
+        '@media only screen and (mix-width: 767px)': { //below desktop
+            minWidth: '100vw',
+            '& > *': { 
+                minWidth: '100vw',
+                marginTop: '115px',
+                height: '100%',
+            },
+        }
     },
     closeSearchDiv:{
         display: 'flex', justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#42ff75'
-    },
-    closeSearchButton:{
-        margin: '8px',
-        padding: '4px 8px',
-        border: '1px solid #fff',
-        display: 'flex', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: '10px',
-        cursor: 'pointer',
     },
 }))
 

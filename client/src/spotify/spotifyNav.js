@@ -9,7 +9,8 @@ import { ChattingWithContext } from '../contexts/chattingWithContext';
 //components
 import MusicBox from './musicBox';
 //styles
-import SpotifyStyles from './styles/spotifyStyles'
+// import SpotifyStyles from './styles/spotifyStyles'
+import NavbarStyles from './styles/navbarStyles'
 import LogoutIcon from '@mui/icons-material/Logout';
 //material ui
 import Drawer from '@mui/material/Drawer';
@@ -29,7 +30,7 @@ if(process.env.NODE_ENV === "development"){
 
 const SpotifyNav = (props) => {
     //styles
-    const classes = SpotifyStyles();
+    const classes = NavbarStyles();
 
     //states
     const
@@ -140,7 +141,7 @@ const SpotifyNav = (props) => {
                 </div>
             : null
             }
-            {//fNAVBAR (ON MAIN LANDING PAGE)
+            {//NAVBAR (ON MAIN LANDING PAGE)
             !loggedOut && userData && !insideChatsList && !insideChatBox ?
                 <>
                 <div className={classes.spotifyTitle}>
@@ -185,7 +186,7 @@ const SpotifyNav = (props) => {
             {//NAVBAR (inside chat list)
             insideChatsList ? 
                 <>
-                <div className={classes.spotifyTitle}>
+                <div className={classes.chatListHead}>
                     <span className={classes.hy}>hy</span>
                     <span className={classes.spotifyH1}>SPOTIFY</span>
                     <span className={classes.hy}>Chats</span>

@@ -29,7 +29,7 @@ const App = () => {
   [userData, setUserData] = useState(),
   [spotifytoken, setSpotifyToken] = useState(),
   [spotifyTrackUri, setSpotifyTrackUri] = useState({
-    uri: undefined, trackName: undefined, isSharingSong: undefined
+    uri: undefined, trackName: undefined, isSharingSong: undefined, data: undefined,
   }),
   [ playingTrack, setPlayingTrack ] = useState(false),
   [chattingWith, setChattingWith] = useState(),
